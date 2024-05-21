@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pexels/widgets/custom_snackbar.dart';
 import 'package:pexels/widgets/loading_indicator.dart';
@@ -42,10 +41,10 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
         child: Column(
           children: [
             const Text(
-              'Wall Print',
+              'Pexels Images',
               style: TextStyle(fontSize: 40, fontFamily: handlee),
             ),
-            Neumorphic(
+            Container(
               margin: const EdgeInsets.all(10),
               child: TextField(
                 controller: _searchController,
@@ -74,7 +73,7 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
               child: BlocConsumer<WallpaperCubit, WallpaperState>(
                 listener: (context, state) {
                   if (state is WallpaperError) {
-                   showCustomSnackbar(context, 'Error happened');
+                    showCustomSnackbar(context, 'Error happened');
                   }
                 },
                 builder: (context, state) {
@@ -83,18 +82,17 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
                   } else if (state is WallpaperError) {
                     return const NotFoundIllustration();
                   }
-                  
+
                   List<WallpaperModel>? wallpapers = [];
                   if (state is WallpaperLoaded) {
-                    if(state.wallpapers.isEmpty){
+                    if (state.wallpapers.isEmpty) {
                       return const NotFoundIllustration();
                     }
                     wallpapers = state.wallpapers;
-
                   } else {
                     wallpapers = context.read<WallpaperCubit>().wallpapers;
                   }
-      
+
                   return MasonryGridView.count(
                     crossAxisCount: 2,
                     itemBuilder: (_, index) =>

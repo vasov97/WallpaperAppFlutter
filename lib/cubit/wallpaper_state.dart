@@ -19,3 +19,7 @@ class WallpaperError extends WallpaperState{
 class WallpaperAppliedSuccessfully extends WallpaperState{}
 
 class WallpaperAppliedFailed extends WallpaperState{}
+
+class WallpaperDownloaded extends WallpaperState{}
+
+class WallpaperDownloadError extends WallpaperState{}

@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:async_wallpaper/async_wallpaper.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../constants/constants.dart';
@@ -38,7 +38,8 @@ class WallpaperCubit extends Cubit<WallpaperState> {
     }
   }
 
-    Future<void> setWallpaper(String wallpaperFile, WallpaperLocation location) async {
+  Future<void> setWallpaper(
+      String wallpaperFile, WallpaperLocation location) async {
     try {
       if (location == WallpaperLocation.both) {
         await _setWallpaper(wallpaperFile, WallpaperLocation.home);
@@ -54,7 +55,7 @@ class WallpaperCubit extends Cubit<WallpaperState> {
     }
   }
 
-  Future<File?> downloadWallpaper(String url) async {
+  Future<File?> getWallpaper(String url) async {
     try {
       Directory dir = await getTemporaryDirectory();
       var response = await get(Uri.parse(url));
@@ -64,6 +65,19 @@ class WallpaperCubit extends Cubit<WallpaperState> {
       return file;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<void> saveWallpaper(String url) async {
+    try {
+      final tmpDir = await getTemporaryDirectory();
+      final tmpPath = '${tmpDir.path}/${DateTime.now().toIso8601String()}.jpg';
+
+      await dio.Dio().download(url, tmpPath);
+      await GallerySaver.saveImage(tmpPath);
+      emit(WallpaperDownloaded());
+    } catch (e) {
+      emit(WallpaperDownloadError());
     }
   }
 
@@ -89,7 +103,7 @@ class WallpaperCubit extends Cubit<WallpaperState> {
     if (response.statusCode == 200) {
       final List<WallpaperModel> wallpapers = [];
       final Map<String, dynamic> data = jsonDecode(response.body);
-      //print(response.body);
+
       data['photos'].forEach((element) {
         wallpapers.add(WallpaperModel.fromJson(element['src']));
       });

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import '../constants/constants.dart';
 import '../model/wallpaper_model.dart';
 import '../screens/set_wallpaper_screen.dart';
 
@@ -11,11 +9,18 @@ class ImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Neumorphic(
-      style: const NeumorphicStyle(
-        depth: 7,
-        color: creamWhite,
-        shadowLightColor: white,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
@@ -34,10 +39,15 @@ class ImageCard extends StatelessWidget {
           child: Image.network(
             wallpaper.thumbnail,
             fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) return child;
               return const Center(
-                child: SizedBox(height: 30, width: 30, child: CircularProgressIndicator()),
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(),
+                ),
               );
             },
           ),

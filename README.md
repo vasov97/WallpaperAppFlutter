@@ -1,16 +1,6 @@
 # pexels
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Wallpaper App using Pexels API and Cubits. Wallpaper can be dowloaded, set for Home or Lock screen. Default wallpapers are from Abstract Art category.
+![pexels1](https://github.com/vasov97/WallpaperAppFlutter/assets/25417544/acede343-a74f-4f3b-a292-f79b18ce6e7e)
+![pexels2](https://github.com/vasov97/WallpaperAppFlutter/assets/25417544/52c0511e-ab01-438d-a394-49675f8bf04c)
+![pexels3](https://github.com/vasov97/WallpaperAppFlutter/assets/25417544/4874578d-c692-4d0f-bc33-94feaccb7f1d)
